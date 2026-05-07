@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polyformalism-a2a"
+version = "0.1.0"
+description = "9-channel polyglot communication framework — think like a polyglot, not a compiler"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.8"
+authors = [{name = "SuperInstance", email = "forgemaster@superinstance.com"}]
+keywords = ["communication", "polyglot", "intent", "a2a", "polyformalism", "channels"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/SuperInstance/polyformalism-thinking"
+Repository = "https://github.com/SuperInstance/polyformalism-thinking"
+
+[tool.setuptools.packages.find]
+include = ["polyformalism_a2a*"]

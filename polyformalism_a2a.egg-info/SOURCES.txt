@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+polyformalism_a2a/__init__.py
+polyformalism_a2a/alignment.py
+polyformalism_a2a/channels.py
+polyformalism_a2a/encode.py
+polyformalism_a2a/holonomy.py
+polyformalism_a2a/navigation.py
+polyformalism_a2a/translate.py
+polyformalism_a2a.egg-info/PKG-INFO
+polyformalism_a2a.egg-info/SOURCES.txt
+polyformalism_a2a.egg-info/dependency_links.txt
+polyformalism_a2a.egg-info/top_level.txt
