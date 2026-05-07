@@ -27,6 +27,7 @@ from .navigation import (
     select_fitting,
 )
 from .holonomy import GL9Holonomy, holonomy_deviation
+from .llm_encode import LLMEncoder, create_deepinfra_encoder
 
 __all__ = [
     "Channel",
@@ -43,4 +44,6 @@ __all__ = [
     "ToleranceSpec",
     "GL9Holonomy",
     "holonomy_deviation",
+    "LLMEncoder",
+    "create_deepinfra_encoder",
 ]
