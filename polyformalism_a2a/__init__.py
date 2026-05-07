@@ -28,6 +28,7 @@ from .navigation import (
 )
 from .holonomy import GL9Holonomy, holonomy_deviation
 from .llm_encode import LLMEncoder, create_deepinfra_encoder
+from .intent_compile import classify_precision, Precision, IntentCompileResult
 
 __all__ = [
     "Channel",
@@ -46,4 +47,7 @@ __all__ = [
     "holonomy_deviation",
     "LLMEncoder",
     "create_deepinfra_encoder",
+    "classify_precision",
+    "Precision",
+    "IntentCompileResult",
 ]
