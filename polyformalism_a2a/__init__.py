@@ -29,6 +29,7 @@ from .navigation import (
 from .holonomy import GL9Holonomy, holonomy_deviation
 from .llm_encode import LLMEncoder, create_deepinfra_encoder
 from .intent_compile import classify_precision, Precision, IntentCompileResult
+from .divergence_tolerance import DivergenceAwareTolerance, DriftTrend, PrecisionClass
 
 __all__ = [
     "Channel",
@@ -50,4 +51,7 @@ __all__ = [
     "classify_precision",
     "Precision",
     "IntentCompileResult",
+    "DivergenceAwareTolerance",
+    "DriftTrend",
+    "PrecisionClass",
 ]
