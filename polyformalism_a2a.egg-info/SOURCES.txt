@@ -4,7 +4,10 @@ polyformalism_a2a/__init__.py
 polyformalism_a2a/alignment.py
 polyformalism_a2a/channels.py
 polyformalism_a2a/encode.py
+polyformalism_a2a/fleet_bridge.py
 polyformalism_a2a/holonomy.py
+polyformalism_a2a/intent_compile.py
+polyformalism_a2a/llm_encode.py
 polyformalism_a2a/navigation.py
 polyformalism_a2a/translate.py
 polyformalism_a2a.egg-info/PKG-INFO

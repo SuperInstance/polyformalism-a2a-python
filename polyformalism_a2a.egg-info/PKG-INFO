@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: polyformalism-a2a
-Version: 0.1.0
+Version: 0.1.1
 Summary: 9-channel polyglot communication framework — think like a polyglot, not a compiler
 Author-email: SuperInstance <forgemaster@superinstance.com>
 License-Expression: Apache-2.0
