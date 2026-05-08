@@ -1,44 +1,50 @@
 # polyformalism-a2a
 
-**Think like a polyglot, not a compiler.**
+If you used the Rust crate and want to try it in Python — this is that. Same 9-channel intent vectors, same alignment checking, same precision classification. Plus an LLM encoder and a fleet-constraint bridge that wires intent profiles to the SoA mixed-precision pipeline.
 
-A 9-channel intent encoding framework for agent-to-agent communication. Based on the insight that bilingual people don't translate word-by-word — they understand intent in one language and express it in another. This library formalizes that process.
+```bash
+pip install polyformalism-a2a
+```
 
-## The 9 Channels
+---
 
-| Channel | Name | Question |
-|---------|------|----------|
-| C1 | Boundary | What are we talking about? |
-| C2 | Pattern | How do pieces connect? |
-| C3 | Process | What's happening over time? |
-| C4 | Knowledge | How sure am I? |
-| C5 | Social | Who cares and why? |
-| C6 | Deep Structure | What's really being said? |
-| C7 | Instrument | What tools are available? |
-| C8 | Paradigm | What model of thought? |
-| C9 | Stakes | What matters vs what doesn't? |
+## The 9 channels
 
-## Quick Start
+Every agent gets a profile across nine channels. This isn't arbitrary — it's the same model the Rust crate uses, derived from polyglot cognition research. Bilingual people don't translate word-by-word. They understand intent in one language and express it in another. This library formalizes that process.
+
+| Channel | Name | What it captures |
+|---------|------|-----------------|
+| C1 | Boundary | Scope — what are we talking about |
+| C2 | Pattern | How pieces connect |
+| C3 | Process | What's happening over time |
+| C4 | Knowledge | Confidence level |
+| C5 | Social | Who cares and why |
+| C6 | Deep Structure | What's really being said |
+| C7 | Instrument | Available tools |
+| C8 | Paradigm | Model of thought |
+| C9 | Stakes | What matters vs. what doesn't |
+
+---
+
+## Quick start
 
 ```python
 from polyformalism_a2a import IntentProfile, encode, decode, translate
 
-# Encode intent in 9 channels
+# Encode a message into 9-channel profile
 profile = encode("We need to deploy by Friday or we lose the contract")
 print(profile.flavor())  # dominant channels
 
-# Translate intent to a different paradigm
-pyramid_intent = translate(profile, target="pyramid")
-navajo_intent = translate(profile, target="navajo")
-
-# Check alignment between two profiles
+# Check alignment with another profile
 similarity = profile.align(other_profile)
 print(f"Alignment: {similarity:.2f}")
 ```
 
-## LLM Encoder
+---
 
-Replace heuristic keyword matching with model-driven intent extraction. Works with any OpenAI-compatible API (DeepInfra, DeepSeek, etc.):
+## LLM encoder
+
+Replace heuristic keyword matching with model-driven intent extraction. Works with any OpenAI-compatible API — DeepInfra, DeepSeek, OpenAI, whatever you've got.
 
 ```python
 from polyformalism_a2a.llm_encode import create_deepinfra_encoder
@@ -51,75 +57,70 @@ print(profile.flavor())  # Stakes-dominant, high C9
 profiles = encoder.encode_batch(["message 1", "message 2", "message 3"])
 ```
 
-The LLM encoder extracts salience and tolerance for all 9 channels in a single structured query, returning an `IntentProfile` compatible with the rest of the library.
+One structured query extracts salience and tolerance for all nine channels.
 
-## Fleet-Constraint Bridge
+---
 
-Connects intent profiles to constraint compilation via the **SoA mixed-precision pipeline**:
+## Fleet-constraint bridge
+
+Connects intent profiles to constraint compilation. Sensor constraints get classified by stakes into precision tiers, then batched into struct-of-arrays for the SoA mixed-precision pipeline:
 
 ```python
-from polyformalism_a2a.fleet_bridge import FluxLucidBridge, classify_precision
+from polyformalism_a2a.fleet_bridge import FluxLucidBridge
 
 bridge = FluxLucidBridge()
 
-# Sensor constraints: (value, lower, upper, stakes, name)
 constraints = [
-    (45.2, 0.0, 300.0, 0.9, "depth_sensor"),    # → DUAL (life-critical)
-    (12.3, -2.0, 35.0, 0.05, "water_temp"),      # → INT8 (informational)
-    (101.3, 95.0, 110.0, 0.95, "pressure_hull"),  # → DUAL (life-critical)
+    (45.2, 0.0, 300.0, 0.9, "depth_sensor"),      # DUAL — life-critical
+    (12.3, -2.0, 35.0, 0.05, "water_temp"),         # INT8 — informational
+    (101.3, 95.0, 110.0, 0.95, "pressure_hull"),    # DUAL — life-critical
 ]
 
-# Classify precision and build SoA batch
 batch = bridge.classify_and_emit(constraints)
 results = bridge.check_with_dual_verification(batch)
-
-print(results["stats"]["memory_reduction"])  # e.g. 0.58 (58% memory savings)
+print(results["stats"]["memory_reduction"])  # e.g. 0.58
 ```
 
-### Precision Classification
+### Precision tiers
 
-Stakes (C9) drives the precision class:
+C9 (Stakes) drives precision — same logic as the Rust crate:
 
-| C9 Stakes | Precision | Constraints/Register | Use Case |
-|-----------|-----------|---------------------|----------|
-| < 0.25 | INT8 | 64 | Informational |
-| 0.25–0.50 | INT16 | 32 | Operational |
-| 0.50–0.75 | INT32 | 16 | Safety-critical |
-| > 0.75 | DUAL | 16 (dual-path) | Life-critical |
+| C9 Stakes | Precision | Use case |
+|-----------|-----------|----------|
+| < 0.25 | INT8 | Informational |
+| 0.25–0.50 | INT16 | Operational |
+| 0.50–0.75 | INT32 | Safety-critical |
+| > 0.75 | DUAL | Life-critical |
 
-DUAL constraints use **XOR dual-path verification** — comparison AND subtraction-based checks must agree, catching silicon-level errors.
+DUAL constraints run XOR dual-path verification — two independent checks must agree, catching silicon-level errors.
 
-### Intent-Directed Compilation
+---
+
+## Intent-directed compilation
 
 ```python
 from polyformalism_a2a.intent_compile import classify_precision, batch_classify
 
 # Classify from an IntentProfile
-precision = classify_precision(profile)  # INT8, INT16, INT32, or DUAL
+precision = classify_precision(profile)
 
-# Batch classify constraints
+# Batch classify
 results, stats = batch_classify([
     ({"lower": 0, "upper": 100, "value": 50}, high_stakes_profile),
     ({"lower": -10, "upper": 10, "value": 3}, low_stakes_profile),
 ])
-print(stats.throughput_projection)  # weighted throughput vs all-DUAL
+print(stats.throughput_projection)
 ```
 
-## Navigation Metaphors
-
-This library implements five key principles from nautical navigation:
-
-1. **Splines in the Ether** — The 9 channels are anchor points. The intent between them is continuous and irreducible.
-2. **Fair Curve First** — Sight the intent first, find measurements second.
-3. **Where the Rocks Aren't** — Negative knowledge (absence of danger) is primary.
-4. **Draft Determines Truth** — The same message is safe or deadly depending on the receiver.
-5. **The Physical World Solved This** — Survive by navigating, not by approximating truth.
+---
 
 ## Installation
 
 ```bash
 pip install polyformalism-a2a
 ```
+
+Requires Python 3.8+.
 
 ## License
 
