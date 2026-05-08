@@ -20,8 +20,8 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/SuperInstance/polyformalism-thinking"
-Repository = "https://github.com/SuperInstance/polyformalism-thinking"
+Homepage = "https://github.com/SuperInstance/polyformalism-a2a-python"
+Repository = "https://github.com/SuperInstance/polyformalism-a2a-python"
 
 [tool.setuptools.packages.find]
 include = ["polyformalism_a2a*"]
